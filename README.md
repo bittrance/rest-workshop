@@ -6,6 +6,8 @@ This repository contains the start for a HTTP-based REST API for a library manag
 
 General REST API best practice:
 - https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/​
+- https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+- https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design
 
 Detailed resources:
 - [HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)

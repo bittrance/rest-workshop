@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import json
+import json, uuid
 from bottle import Bottle, HTTPResponse, request, response
 
 # Some Bottle how-tos:
@@ -44,13 +44,19 @@ def post_books():
     # TODO: Introduce validation - what are the status codes?
     book_id = str(uuid.uuid4())
     book = request.json
-    pass
+    books[book_id] = book
+    book['id'] = book_id
+    return book
 
 @app.get('/books/:id') # Magically handles HEAD requests too
 def get_book(id):
     # TODO: Implement ETag, If-Modified
     # TODO: Implement 404
-    return book[id]
+    etag = str(hash(json.dumps(books[id])))
+    if etag == request.headers.get('if-modified'):
+        return HTTPResponse(status=304)
+    response.headers['ETag'] = etag
+    return books[id]
 
 @app.put('/books/:book_id')
 def put_book(book_id):
@@ -62,6 +68,12 @@ def delete_book(book_id):
     # TODO: Delete an existing book
     pass
 
+@app.post('/books/:id/borrow')
+def borrow_book(id):
+    pass
+
+@app.post('/books/:id/loans')
+@app.get('/books/:id/loans')
 # TODO: Implement borrowing books
 # TODO: Implement a search interface
 
